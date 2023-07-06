@@ -40,19 +40,3 @@ const feed = [
   
   console.log("feed", feed);
   
-  // CRUD - Create, Read, Update, Delete
-  
-  // READING ALL POSTS
-  // array + anonyomous function: map
-  const outputFeed = (feed) => {
-    // return statuses of the posts
-    // map function returns a new array of just the statuses
-    const output = feed.map((p) => {
-      console.log(outputPostStatus(p));
-      return outputPostStatus(p);
-    });
-    // console.log(output);
-  };
-  
-  outputFeed(feed);
-  
