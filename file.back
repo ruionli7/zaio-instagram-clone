@@ -285,23 +285,9 @@ const outputPostStatus = (post) => {
     return output;
 };
 
-
-
-const showDeletePostModal = (id) =>{
-    isDeleteMode = true;
-    isEditMode = false;
-    isCreateMode = false;
-    createPostBtn.style.display = "none";
-    deletePostBtn.style.display = "block";
-    editPostBtn.style.display = "none";
-    console.log("show delete modal", id);
-    usernameInput.value = id;
-    deletePost(id);
-}
 const showEditPostModal = (id) => {
-    //console.log(getPostsFromFirebase());
-
-    //
+    console.log(getPostsFromFirebase());
+    
     postToEditId = id;  
     isEditMode = true;
     createPostBtn.style.display = "none";
@@ -316,6 +302,19 @@ const showEditPostModal = (id) => {
     captionInput.value = postToEdit.caption;
     modal.show();
 };
+
+const showDeletePostModal = (id) =>{
+    isDeleteMode = true;
+    isEditMode = false;
+    isCreateMode = false;
+    createPostBtn.style.display = "none";
+    deletePostBtn.style.display = "block";
+    editPostBtn.style.display = "none";
+    console.log("show delete modal", id);
+    usernameInput.value = id;
+    deletePost(id);
+}
+
 
 outputFeed();
 getPostsFromFirebase();
