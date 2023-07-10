@@ -127,6 +127,7 @@ main {
 .post {
     display: flex;
     flex-direction: column;
+    max-width: 975px;
 }
 .header {
     display: flex;
@@ -148,11 +149,12 @@ main {
     font-size: 16px;
     font-weight: 400;
     margin-left: 10px;
+    
 }
 
 .post-pic img{
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
 }
 .footer {
@@ -164,15 +166,25 @@ main {
     border: 1px solid #dbdbdb;
     border-bottom: none;
     display: block;
+    
 }
 .user-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 .like-comment-share{
     display: flex;
     
+}
+.margin-left-small{
+    margin-left: 14px;
+}
+.margin-right{
+    margin-right: 5px;
+    align-items: center;
+    justify-content: space-between;
 }
 .likes{
     font-size: 14px;
