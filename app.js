@@ -52,7 +52,7 @@ editPostBtn.addEventListener("click", () => {
 });
 deletePostBtn.addEventListener("click", () =>{
     console.log("delete post btn clicked");
-    deletePost(id);
+    //deletePost(id);
     modal.hide;
 })
 
@@ -101,17 +101,28 @@ const uploadPostToFirebase = (post) => {
         });
 };
 
+// const getPostsFromFirebase = () => {
+//     const postsRef = db.collection("posts")
+//         .get()
+//         .then((querySnapshot) => {
+//             querySnapshot.forEach((doc) => {
+//                 //console.log(doc.data());
+//                 feed.push(doc.data());
+//                 outputFeed();
+//             });
+//         });
+// };
 const getPostsFromFirebase = () => {
-    const postsRef = db.collection("posts")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                console.log(doc.data());
-                feed.push(doc.data());
-                outputFeed();
-            });
+    db.collection("posts")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());
+          feed.push(doc.data());
+          outputFeed();
         });
-};
+      });
+  };
 
 //create post
 const createPost = (imageLink, caption, username) => {
@@ -131,7 +142,7 @@ const createPost = (imageLink, caption, username) => {
     feed.push(newPost);
     outputFeed();
     modal.hide();
-    outputFeed(feed);
+   // outputFeed(feed);
 };
 // read post
 // array + anonyomous function: map
@@ -140,7 +151,7 @@ const outputFeed = () => {
     // map function returns a new array of just the statuses
     const updatedFeed = feed.map((post) => {
         return `
-        <div class="post">
+        
         <div class="header">
             <div class="profile-area">
                 <div class="post-pic">
@@ -179,7 +190,7 @@ const outputFeed = () => {
             
         </div>
         <div class="body">
-            <img alt=" " src="${post.imageLink}"class="FFVAD" decoding="auto" width="600" 
+            <img alt=" " src="${post.imageLink}"class="FFVAD" decoding="auto" width="620" 
             style="object-fit:cover">
         </div>
         <div class="footer">
@@ -240,7 +251,7 @@ const outputFeed = () => {
             <input type="text" placeholder="Add a comment...">
             <a class="post-btn">Post</a>
         </div>
-    </div>
+    
       `;
     });
     postsDiv.innerHTML = updatedFeed.join(" ");
@@ -298,10 +309,13 @@ const showDeletePostModal = (id) =>{
     usernameInput.value = id;
     deletePost(id);
 }
+getPostsFromFirebase();
 const showEditPostModal = (id) => {
-    //console.log(getPostsFromFirebase());
-
-    //
+    // console.log(getPostsFromFirebase());
+    console.log("get posts feed")
+    // feed = getPostsFromFirebase().data;
+    // console.log(outputFeed());
+    
     postToEditId = id;  
     isEditMode = true;
     createPostBtn.style.display = "none";
@@ -311,9 +325,9 @@ const showEditPostModal = (id) => {
     const postToEdit = feed[id];
     console.log("postToEdit", postToEdit);
     console.log(id);
-    usernameInput.value = postToEdit.username;
     imageLinkInput.value = postToEdit.imageLink;
     captionInput.value = postToEdit.caption;
+    usernameInput.value = postToEdit.username;
     modal.show();
 };
 
