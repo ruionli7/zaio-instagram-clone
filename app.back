@@ -46,7 +46,7 @@ showCreateModal.addEventListener("click", () => {
 editPostBtn.addEventListener("click", () => {
     console.log("edit post btn clicked");
     updatePost(postToEditId, imageLinkInput.value, captionInput.value);
-    modal.hide();
+//     modal.hide();
 });
 // deletePostBtn.addEventListener("click", () =>{
 //     console.log("delete post btn clicked");
@@ -132,6 +132,14 @@ const outputFeed = () => {
             <button id="delete-post-btn" class="btn btn-sm btn-primary" type="button" margin-right onclick="deletePost(${post.id})">Delete</button>
             </div>
 
+            <!--<div class="dropdown">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" color = data-bs-toggle="dropdown" aria-expanded="false">Options</button>
+                <ul class="dropdown-menu">
+                <li><button id="edit-post-btn" class="btn btn-sm btn-primary" type="button" id="edit-post-btn">Edit Post</button></li>
+                <li><button id="delete-post-btn" class="btn btn-sm btn-primary" type="button"id="delete-post-btn">Delete Post</button></li>
+            </ul>
+         </div>-->
+
 
 
             <!--<div class="options">
@@ -149,7 +157,7 @@ const outputFeed = () => {
             
         </div>
         <div class="body">
-            <img alt=" " src="${post.imageLink}"class="FFVAD" decoding="auto" width="614" 
+            <img alt=" " src="${post.imageLink}"class="FFVAD" decoding="auto" width="620" 
             style="object-fit:cover">
         </div>
         <div class="footer">
@@ -228,8 +236,8 @@ const updatePost = (id, newImageLink, newCaption) => {
     feed = updatedFeed;
     uploadPostToFirebase(feed[id]);
     outputFeed(feed);
-
 }
+
 
 //delete post
  const deletePost = (id) => {
@@ -261,23 +269,23 @@ const updatePost = (id, newImageLink, newCaption) => {
     outputFeed(feed);
     deletePostFromFirebase(deletePostId);
 };
-const deletePostFromFirebase = () =>{
-    const postToDelete = feed[deletePostId];
-    console.log(postToDelete);
-    db
-        .collection("posts")
-        .doc(deletePostId.toString())
-        console.log(deletePostId.toString())
-        //.delete(this.feed[deletePostId])
-        postToDelete.delete();
-    //     .then(() =>{
-    //         console.log("document successfully deleted");
-    //         deletePost(id);
-    //    })
-    //    .catch((error) =>{
-    //     console.log("error removing document: ", error);
-    //    });
-}
+// const deletePostFromFirebase = () =>{
+//     const postToDelete = feed[deletePostId];
+//     console.log(postToDelete);
+//     db
+//         .collection("posts")
+//         .doc(deletePostId.toString())
+//         console.log(deletePostId.toString())
+//         //.delete(this.feed[deletePostId])
+//         postToDelete.delete();
+//     //     .then(() =>{
+//     //         console.log("document successfully deleted");
+//     //         deletePost(id);
+//     //    })
+//     //    .catch((error) =>{
+//     //     console.log("error removing document: ", error);
+//     //    });
+// }
 
 
 const outputPostStatus = (post) => {
@@ -302,7 +310,7 @@ const showEditPostModal = (id) => {
     postToEditId = id;  
     isEditMode = true;
     createPostBtn.style.display = "none";
-    //deletePostBtn.style.display = "none";
+    deletePostBtn.style.display = "none";
     editPostBtn.style.display = "block";
     console.log("show modal", id);
     const postToEdit = feed[id];
