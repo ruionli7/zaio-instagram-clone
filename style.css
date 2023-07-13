@@ -21,8 +21,9 @@ nav {
     border-bottom: #dbdbdb 1px solid;
     display: flex;
     justify-content: center;
+    align-items: center;
     overflow: hidden;
-    
+    width: 100%;
 }
 
 .inner-nav {
@@ -70,7 +71,6 @@ main {
 }
 
 .content-container {
-    padding-top: 30px;
     width: 935px;
     height: 100%;
     display: flex;
@@ -81,22 +81,26 @@ main {
     margin: 0 28px 0 0;
     width: 614px;
     height: 100%;
+    padding-top: 50px;
+    position: fixed;
     overflow-y: scroll;
 }
-/* ::-webkit-scrollbar{
+::-webkit-scrollbar{
     display: none;
-} */
+}
 .sidebar {
     width: 293px;
     height: 100%;
     position: fixed;
+    padding-top: 50px;
     margin-left: 650px;
 }
 .stories {
     background-color: white;
     width: 100%;
-    padding: 16px;
+    padding: 16px 0;
     border: 1px solid #dbdbdb;
+    border-radius: 3px;
     height: 118px;
     overflow: hidden;
 }

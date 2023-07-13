@@ -11,17 +11,15 @@ const editPostBtn = document.querySelector("#edit-post-btn");
 const deletePostBtn = document.querySelector("#delete-post-btn");
 const logoutBtn = document.querySelector("#logout-btn");
 editPostBtn.style.display = "none";
-deletePostBtn.style.display = "none";
+// deletePostBtn.style.display = "none";
 
-// const myDropdown = document.getElementById('myDropdown')
-// const dropdownElementList = document.querySelectorAll('.dropdown-toggle')
-// const dropdownList = [...dropdownElementList].map(dropdownToggleEl => new bootstrap.Dropdown(dropdownToggleEl))
 
 const editBtn = document.querySelector("#edit-btn");
 
 const modal = new bootstrap.Modal(document.getElementById("modal"));
 const showCreateModal = document.querySelector("#show-create-modal");
-const showDeleteModal = document.querySelector("#show-delete-modal");
+// const showDeleteModal = document.querySelector("#show-delete-modal");
+
 
 console.log("searchInput", searchInput, searchBtn);
 
@@ -50,35 +48,14 @@ editPostBtn.addEventListener("click", () => {
     updatePost(postToEditId, imageLinkInput.value, captionInput.value);
     modal.hide();
 });
-deletePostBtn.addEventListener("click", () =>{
-    console.log("delete post btn clicked");
-    //deletePost(id);
-    modal.hide;
-})
-
-// showEditPostModal.addEventListener("click", () => {
-//     isCreateMode = false;
-//     isDeleteMode = false;
-//     createPostBtn.style.display = "none";
-//     editPostBtn.style.display = "block";
-//     deletePostBtn.style.display = "none";  
-// });
-// deletePostBtn.addEventListener("click", () => {
+// deletePostBtn.addEventListener("click", () =>{
 //     console.log("delete post btn clicked");
-//     isEditMode = false;
-//     createPost = false;
-//     usernameInput.value = "";
-//     modal.show;
-// });
+//     deletePostFromFirebase();
+// })
+
 logoutBtn.addEventListener("click", () => {
     handleLogout();
 });
-
-
-// myDropdown.addEventListener('show.bs.dropdown', (event) => {
-//   console.log("clicked options");
-//   show.bs.dropdown;
-// })
 
 //global variables
 var feed = [];
@@ -101,17 +78,6 @@ const uploadPostToFirebase = (post) => {
         });
 };
 
-// const getPostsFromFirebase = () => {
-//     const postsRef = db.collection("posts")
-//         .get()
-//         .then((querySnapshot) => {
-//             querySnapshot.forEach((doc) => {
-//                 //console.log(doc.data());
-//                 feed.push(doc.data());
-//                 outputFeed();
-//             });
-//         });
-// };
 const getPostsFromFirebase = () => {
     db.collection("posts")
       .get()
@@ -162,7 +128,7 @@ const outputFeed = () => {
             </div>
             <div class="margin-right">
             <button id="edit-post-btn" class="btn btn-sm btn-primary" type="button" margin-right onclick="showEditPostModal(${post.id})">Edit</button>
-            <button id="delete-post-btn" class="btn btn-sm btn-primary" type="button" margin-right onclick="showDeletePostModal(${post.id})">Delete</button>
+            <button id="delete-post-btn" class="btn btn-sm btn-primary" type="button" margin-right onclick="deletePost(${post.id})">Delete</button>
             </div>
 
             <!--<div class="dropdown">
@@ -273,17 +239,53 @@ const updatePost = (id, newImageLink, newCaption) => {
 }
 
 //delete post
-const deletePost = (id) => {
+ const deletePost = (id) => {
     //delete post with specific id
+    console.log(id);
+    
+    isDeleteMode = true;
+    isEditMode = false;
+    isCreateMode = false;
     const updatedFeed = feed.filter((post) => {
         if (post.id !== id) {
             return post;
         }
+        const deletePostFromFirebase = () =>{
+            console.log(id);
+            const postToDelete = feed[id];
+            console.log(postToDelete);
+            db
+                .collection("posts")
+                .doc(postToDelete.id.toString())
+                console.log(postToDelete.id.toString())
+                .delete(postToDelete)
+                .then(() =>{
+                    console.log("document successfully deleted");
+                    deletePost(id);
+               })
+               .catch((error) =>{
+                console.log("error removing document: ", error);
+               });
+        }
+        deletePostFromFirebase();
+
+    //     db
+    //     .collection("posts")
+    //     .doc(this.feed.post.id)
+    //     console.log(this.feed.post.id)
+    //     .delete ()
+    //     .then(() =>{
+    //         console.log("document successfully deleted");
+    //         this.getPostsFromFirebase;
+    //    })
+    //    .catch((error) =>{
+    //     console.log("error removing document: ", error);
+    //    });
     });
     feed = updatedFeed;
     outputFeed(feed);
-    
 };
+
 
 const outputPostStatus = (post) => {
     const output = `
@@ -297,20 +299,8 @@ const outputPostStatus = (post) => {
 };
 
 
-
-const showDeletePostModal = (id) =>{
-    isDeleteMode = true;
-    isEditMode = false;
-    isCreateMode = false;
-    createPostBtn.style.display = "none";
-    deletePostBtn.style.display = "block";
-    editPostBtn.style.display = "none";
-    console.log("show delete modal", id);
-    usernameInput.value = id;
-    deletePost(id);
-}
 getPostsFromFirebase();
-const showEditPostModal = (id) => {
+const showEditPostModal = (id) => { 
     // console.log(getPostsFromFirebase());
     console.log("get posts feed")
     // feed = getPostsFromFirebase().data;
@@ -332,22 +322,3 @@ const showEditPostModal = (id) => {
 };
 
 outputFeed();
-getPostsFromFirebase();
-
-
-
-// spread operator
-// array of objects - feed
-/*const feed = [
-    post,
-    { ...post, username: "johndoe" },
-    { ...post, username: "janedoe" },
-    { ...post, username: "elonmusk" },
-  ];*/
-
-//outputFeed(feed);
-
-//demo of creating post 
-// createPost("http://127.0.0.1:5500/assets/post.png", "here is tom", "tomandjerry");
-
-// updatePost(2, "imageLink", "csf");
